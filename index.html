@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#16130f" />
+  <title>مكتبتي الفكرية</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <style>
+    :root {
+      --bg: #16130f;
+      --paper: #f3ead8;
+      --muted: #b7ab96;
+      --line: rgba(243,234,216,.12);
+      --card: #1f1b16;
+      --gold: #c4a574;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      background: var(--bg);
+      color: var(--paper);
+      font-family: "Iowan Old Style", "Georgia", "Times New Roman", serif;
+      min-height: 100%;
+    }
+    header {
+      padding: calc(22px + env(safe-area-inset-top)) 20px 12px;
+      position: sticky; top: 0; z-index: 5;
+      background: linear-gradient(var(--bg), rgba(22,19,15,.92));
+      backdrop-filter: blur(10px);
+    }
+    h1 { margin: 0; font-size: 1.45rem; font-weight: 600; letter-spacing: .02em; }
+    .sub { color: var(--muted); font-size: .9rem; margin-top: 4px; }
+    .search {
+      margin-top: 14px; width: 100%;
+      background: var(--card);
+      border: 1px solid var(--line);
+      color: var(--paper);
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 1rem;
+      outline: none;
+    }
+    .chips { display: flex; gap: 8px; overflow-x: auto; padding: 12px 20px 4px; }
+    .chip {
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      background: transparent;
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: .85rem;
+    }
+    .chip.active { background: var(--paper); color: var(--bg); border-color: var(--paper); }
+    main { padding: 8px 16px calc(28px + env(safe-area-inset-bottom)); display: grid; gap: 10px; }
+    a.card {
+      display: block; text-decoration: none; color: inherit;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
+    .title { font-size: 1.05rem; line-height: 1.5; }
+    .meta { margin-top: 6px; color: var(--muted); font-size: .86rem; }
+    .cat { color: var(--gold); }
+    .install {
+      margin: 8px 16px 0;
+      padding: 12px 14px;
+      border: 1px dashed var(--gold);
+      border-radius: 14px;
+      color: var(--muted);
+      font-size: .88rem;
+      line-height: 1.6;
+    }
+    .empty { text-align: center; color: var(--muted); padding: 40px 20px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>مكتبتي الفكرية</h1>
+    <div class="sub">١٦ كتاباً بلا تكرار — تفتح من درايف</div>
+    <input class="search" id="q" type="search" placeholder="ابحث عن عنوان أو مؤلف…" />
+  </header>
+  <div class="chips" id="chips"></div>
+  <p class="install">
+    للتثبيت على الآيفون أو الآيباد: افتح هذه الصفحة في سفاري ← زر المشاركة ← إضافة إلى الشاشة الرئيسية.
+    ملفات PDF تُفتح في درايف أو تطبيق الملفات حسب إعداد الجهاز.
+  </p>
+  <main id="list"></main>
+  <script>
+    const BOOKS = [
+      { title: "شجاعة أن تكون غير محبوب", author: "كيشيمي كوغا", cat: "علم نفس", url: "https://drive.google.com/file/d/12OG08ddwgPVSUcVkLsCLTjH5rjYwBNko/view" },
+      { title: "القلق", author: "", cat: "علم نفس", url: "https://drive.google.com/file/d/1DIz0JA91pogvakEtMuC8x_o_YMtSFt4H/view" },
+      { title: "علاج النفس 2", author: "", cat: "علم نفس", url: "https://drive.google.com/file/d/1m-kZv1A7XXxPp5E0hXvo4bn71oKl4Uef/view" },
+      { title: "تهذيب النفوس", author: "هشام الزهيري", cat: "تزكية", url: "https://drive.google.com/file/d/1xuQzN3Ft5TF5G9MtKDqfp_4omGSaBrSu/view" },
+      { title: "مداواة النفوس", author: "ابن حزم", cat: "تزكية", url: "https://drive.google.com/file/d/1u0JMae0gXoYxADcE4KmBlze9RcKRAIpA/view" },
+      { title: "لطائف الفوائد", author: "الخثلان", cat: "فوائد", url: "https://drive.google.com/file/d/15-v0sp2t64qcM8PHjgpAbTL5U4bplgyE/view" },
+      { title: "الزمن ما يفعله بنا وما نصنعه منه", author: "روديغر سافرانسكي", cat: "فلسفة", url: "https://drive.google.com/file/d/1-jVTZwTG2xBgZW8Cy6ehFKZSqGucsDhB/view" },
+      { title: "أصل التفاوت بين الناس", author: "جان جاك روسو", cat: "فلسفة", url: "https://drive.google.com/file/d/1-OAi4-MBJnal8lL5PpiuFH2kk1In1kD8/view" },
+      { title: "كارل بوبر", author: "كارل بوبر", cat: "فلسفة", url: "https://drive.google.com/file/d/1KFtEB0GdsPb6ykn7AxHaeSY5KcPvTdTd/view" },
+      { title: "تجديد الفكر الديني في الإسلام", author: "محمد إقبال", cat: "فكر إسلامي", url: "https://drive.google.com/file/d/1sZBssLERO6z3gBpWnp_I-25_mO5f4qCE/view" },
+      { title: "رمضان دروس وعبر", author: "", cat: "فكر إسلامي", url: "https://drive.google.com/file/d/1zfnzFS-YEOTqdJ5sVBtrg5M70Odz9rnb/view" },
+      { title: "مذكرات شاهد للقرن", author: "مالك بن نبي", cat: "فكر إسلامي", url: "https://drive.google.com/file/d/1FKYFCcALK7meR75Zuj2mQMVqSIgC2XwF/view" },
+      { title: "الوعي بالتاريخ", author: "", cat: "تاريخ", url: "https://drive.google.com/file/d/1RMOgWhvW9rKeLIWRFRZrkqZzXPVp7kOf/view" },
+      { title: "المعذّبون في الأرض", author: "طه حسين", cat: "أدب", url: "https://drive.google.com/file/d/1U4qq2mtUmdG8Qb9kEPieNtWZHIw6d8n4/view" },
+      { title: "مع الناس", author: "", cat: "أدب", url: "https://drive.google.com/file/d/1sIbU9Wr_6SnVF60TKxWZn65g66ykSqMD/view" },
+      { title: "المثقفون والعسكر", author: "مدبولي", cat: "فكر سياسي", url: "https://drive.google.com/file/d/1nLkH62L_JaLX-vkuiKcnVhrLC0wX6Yao/view" }
+    ];
+    const cats = ["الكل", ...Array.from(new Set(BOOKS.map(b => b.cat)))];
+    let cat = "الكل";
+    const chips = document.getElementById("chips");
+    const list = document.getElementById("list");
+    const q = document.getElementById("q");
+    chips.innerHTML = cats.map(c => `<button class="chip${c==="الكل"?" active":""}" data-c="${c}">${c}</button>`).join("");
+    chips.addEventListener("click", e => {
+      const b = e.target.closest(".chip"); if (!b) return;
+      cat = b.dataset.c;
+      chips.querySelectorAll(".chip").forEach(x => x.classList.toggle("active", x===b));
+      render();
+    });
+    q.addEventListener("input", render);
+    function render() {
+      const term = q.value.trim();
+      const rows = BOOKS.filter(b => {
+        const okCat = cat === "الكل" || b.cat === cat;
+        const hay = (b.title + " " + b.author).includes(term);
+        return okCat && hay;
+      });
+      list.innerHTML = rows.length ? rows.map(b => `
+        <a class="card" href="${b.url}" target="_blank" rel="noopener">
+          <div class="title">${b.title}</div>
+          <div class="meta">${b.author ? b.author + " · " : ""}<span class="cat">${b.cat}</span></div>
+        </a>`).join("") : `<div class="empty">لا نتائج</div>`;
+    }
+    render();
+    if ("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js");
+  </script>
+</body>
+</html>
