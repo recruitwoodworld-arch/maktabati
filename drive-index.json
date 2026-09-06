@@ -1,0 +1,24 @@
+{
+  "version": 2,
+  "library": "مكتبتي الفكرية",
+  "folderId": "1UfUqW63JqRco57hMte_xxUHBCzmVjVke",
+  "updatedAt": "2026-09-06T12:00:00+03:00",
+  "books": [
+    {"title": "شجاعة أن تكون غير محبوب", "author": "كيشيمي كوغا", "category": "علم نفس", "driveId": "12OG08ddwgPVSUcVkLsCLTjH5rjYwBNko"},
+    {"title": "القلق", "author": "", "category": "علم نفس", "driveId": "1DIz0JA91pogvakEtMuC8x_o_YMtSFt4H"},
+    {"title": "علاج النفس 2", "author": "", "category": "علم نفس", "driveId": "1m-kZv1A7XXxPp5E0hXvo4bn71oKl4Uef"},
+    {"title": "تهذيب النفوس", "author": "هشام الزهيري", "category": "تزكية", "driveId": "1xuQzN3Ft5TF5G9MtKDqfp_4omGSaBrSu"},
+    {"title": "مداواة النفوس", "author": "ابن حزم", "category": "تزكية", "driveId": "1u0JMae0gXoYxADcE4KmBlze9RcKRAIpA"},
+    {"title": "لطائف الفوائد", "author": "الخثلان", "category": "فوائد", "driveId": "15-v0sp2t64qcM8PHjgpAbTL5U4bplgyE"},
+    {"title": "الزمن ما يفعله بنا وما نصنعه منه", "author": "روديغر سافرانسكي", "category": "فلسفة", "driveId": "1-jVTZwTG2xBgZW8Cy6ehFKZSqGucsDhB"},
+    {"title": "أصل التفاوت بين الناس", "author": "جان جاك روسو", "category": "فلسفة", "driveId": "1-OAi4-MBJnal8lL5PpiuFH2kk1In1kD8"},
+    {"title": "كارل بوبر", "author": "كارل بوبر", "category": "فلسفة", "driveId": "1KFtEB0GdsPb6ykn7AxHaeSY5KcPvTdTd"},
+    {"title": "تجديد الفكر الديني في الإسلام", "author": "محمد إقبال", "category": "فكر إسلامي", "driveId": "1sZBssLERO6z3gBpWnp_I-25_mO5f4qCE"},
+    {"title": "رمضان دروس وعبر", "author": "", "category": "فكر إسلامي", "driveId": "1zfnzFS-YEOTqdJ5sVBtrg5M70Odz9rnb"},
+    {"title": "مذكرات شاهد للقرن", "author": "مالك بن نبي", "category": "فكر إسلامي", "driveId": "1FKYFCcALK7meR75Zuj2mQMVqSIgC2XwF"},
+    {"title": "الوعي بالتاريخ", "author": "", "category": "تاريخ", "driveId": "1RMOgWhvW9rKeLIWRFRZrkqZzXPVp7kOf"},
+    {"title": "المعذّبون في الأرض", "author": "طه حسين", "category": "أدب", "driveId": "1U4qq2mtUmdG8Qb9kEPieNtWZHIw6d8n4"},
+    {"title": "مع الناس", "author": "", "category": "أدب", "driveId": "1sIbU9Wr_6SnVF60TKxWZn65g66ykSqMD"},
+    {"title": "المثقفون والعسكر", "author": "مدبولي", "category": "فكر سياسي", "driveId": "1nLkH62L_JaLX-vkuiKcnVhrLC0wX6Yao"}
+  ]
+}
